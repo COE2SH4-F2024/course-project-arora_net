@@ -24,6 +24,8 @@ class GameMechs
 
         objPos food;
 
+        char lastinput;
+
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
@@ -47,6 +49,8 @@ class GameMechs
         // More methods should be added here
         int getInputStatus() const;
         void setInputStatusTrue();
+        char getLastinput();
+        void setlastinput(char in);
 };
 
 #endif

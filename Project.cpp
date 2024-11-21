@@ -7,11 +7,11 @@
 
 using namespace std;
 GameMechs *mechanics;
-Player *player;
+Player *player_ptr;
 
 #define DELAY_CONST 100000
 
-bool exitFlag;
+//bool exitFlag;
 
 void Initialize(void);
 void GetInput(void);
@@ -26,8 +26,8 @@ int main(void)
 {
 
     Initialize();
-
-    while(!mechanics->getExitFlagStatus())  
+    MacUILib_printf("%d",mechanics->getExitFlagStatus());
+    while(mechanics->getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -46,21 +46,30 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     mechanics = new GameMechs;
-    
+    player_ptr = new Player(mechanics);
+
 }
 
 void GetInput(void)
 {
     if(MacUILib_hasChar())
     {
-        mechanics->setInputStatusTrue();
         mechanics->setInput(MacUILib_getChar());
+        mechanics->setlastinput(mechanics->getInput());
     }
 }
 
 void RunLogic(void)
 {
-    
+    if(mechanics->getInput() != 0){
+        player_ptr->updatePlayerDir();
+        player_ptr->movePlayer();
+    }else if(mechanics->getLastinput() != 0)
+    {
+        player_ptr->updatePlayerDir();
+        player_ptr->movePlayer();
+    }
+    mechanics->clearInput();
 }
 
 void DrawScreen(void)
@@ -73,12 +82,16 @@ void DrawScreen(void)
                 MacUILib_printf("%c",'#');
             }else if(j == 29){
                 MacUILib_printf("%c\n",'#');
+            }else if(i == player_ptr->getPlayerY() && j == player_ptr->getPlayerX()){
+                MacUILib_printf("%c",player_ptr->getplayerchar());
             }else{
                 MacUILib_printf("%c",' ');
             }
         }
     }
     MacUILib_printf("%s\n","##############################");
+    const char *direction = player_ptr->getPlayerDir();
+    MacUILib_printf("%s\n",direction);
 }
 
 void LoopDelay(void)
@@ -94,4 +107,5 @@ void CleanUp(void)
     MacUILib_uninit();
 
     delete mechanics;
+    delete player_ptr;
 }

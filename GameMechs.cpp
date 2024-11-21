@@ -8,6 +8,7 @@ GameMechs::GameMechs()
     loseFlag = 0;
     score = 0;
     inputStatus = false;
+    exitFlag = false;
     boardSizeX = 30;
     boardSizeY = 15;
     
@@ -19,6 +20,7 @@ GameMechs::GameMechs(int boardX, int boardY)
     loseFlag = 0;
     score = 0;
     inputStatus = false;
+    exitFlag = false;
     boardSizeX = boardX;
     boardSizeY = boardY;
    
@@ -97,4 +99,14 @@ int GameMechs::getInputStatus() const
 void GameMechs::setInputStatusTrue()
 {
     inputStatus = true;
+}
+
+char GameMechs::getLastinput() 
+{
+    return lastinput;
+}
+
+void GameMechs::setlastinput(char in)
+{
+    lastinput = in;
 }

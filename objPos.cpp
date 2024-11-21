@@ -18,7 +18,27 @@ objPos::objPos(int xPos, int yPos, char sym)
 
 // Respect the rule of six / minimum four
 // [TODO] Implement the missing special member functions to meet the minimum four rule
+objPos::objPos(const objPos &obj)
+{
+    pos = new Pos{obj.pos->x,obj.pos->y};
+    symbol = obj.symbol;
+    
+}
+objPos& objPos::operator= (const objPos &obj)
+{
+    if(this != &obj)
+    {
+        pos = new Pos{obj.pos->x,obj.pos->y};
+        symbol = obj.symbol;
+    }
 
+    return *this;
+}
+
+objPos::~objPos()
+{
+    delete pos;
+}
 
 
 

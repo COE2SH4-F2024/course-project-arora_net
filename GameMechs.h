@@ -9,6 +9,7 @@
 
 using namespace std;
 
+
 class GameMechs
 {
     private:
@@ -16,6 +17,7 @@ class GameMechs
         bool exitFlag;
         bool loseFlag;
         int score;
+        bool inputStatus;
 
         int boardSizeX;
         int boardSizeY;
@@ -43,6 +45,8 @@ class GameMechs
         void incrementScore();
         
         // More methods should be added here
+        int getInputStatus() const;
+        void setInputStatusTrue();
 };
 
 #endif

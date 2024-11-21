@@ -15,9 +15,10 @@ Player::~Player()
     // delete any heap members here
 }
 
-void Player::getPlayerPos(objPos &returnPos) const
+void Player::getPlayerPos() const
 {
     // return the reference to the playerPos arrray list
+    
 }
 
 void Player::updatePlayerDir()

@@ -102,6 +102,8 @@ void DrawScreen(void)
     int foodx = food->getfoodx();
     int foody = food->getfoody();
     char foodsymbol = food->getsymbol();
+
+    int score = mechanics->getScore();
     
 
     MacUILib_printf("food x:%d\n",foodx);
@@ -149,7 +151,8 @@ void DrawScreen(void)
     }
     MacUILib_printf("%s\n","##############################");
     const char *direction = player_ptr->getPlayerDir();
-    MacUILib_printf("%s\n",direction);
+    MacUILib_printf("DIRECTION: %s\n",direction);
+    MacUILib_printf("SCORE: %d\n",score);
 
 }
 

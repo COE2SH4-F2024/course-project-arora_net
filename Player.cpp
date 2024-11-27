@@ -137,10 +137,8 @@ void Player::movePlayer()
     {
         increasePlayerLength(temp);
         foodRef->generateFood(playerPosList);
-    }else{
-        playerPosList->insertHead(temp);
-        playerPosList->removeTail();
     }
+    mainGameMechsRef->incrementScore(playerPosList);
     
     
 
@@ -158,8 +156,6 @@ bool Player::checkFoodConsumption(objPos temp)
     if(temp.isPosEqual(&temp_buffer))
     {
         return true;
-        playerPosList->insertHead(temp);
-        foodRef->generateFood(playerPosList);
     }else{
         return false;
     }

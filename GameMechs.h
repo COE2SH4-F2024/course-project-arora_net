@@ -25,6 +25,7 @@ class GameMechs
         objPos food;
 
         char lastinput;
+        
 
     public:
         GameMechs();
@@ -47,6 +48,8 @@ class GameMechs
         void incrementScore();
         
         // More methods should be added here
+        void incrementScore(objPosArrayList *refLise);
+
         int getInputStatus() const;
         void setInputStatusTrue();
         char getLastinput();

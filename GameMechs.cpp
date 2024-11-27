@@ -96,7 +96,7 @@ void GameMechs::clearInput()
 // More methods should be added here
 void GameMechs::incrementScore(objPosArrayList *refList)
 {
-    score = refList->getSize();
+    score = refList->getSize() - 1;
 }
 
 int GameMechs::getInputStatus() const

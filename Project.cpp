@@ -105,13 +105,15 @@ void DrawScreen(void)
 
     int score = mechanics->getScore();
     
-
+    //debugging print statements 
+    /*
     MacUILib_printf("food x:%d\n",foodx);
     MacUILib_printf("food y:%d\n",foody);
 
     MacUILib_printf("player x:%d\n",playerx);
     MacUILib_printf("player y:%d\n",playery);
     MacUILib_printf("player symbol:%c\n",temp_player.getSymbol());
+    */
 
     MacUILib_printf("%s\n","##############################");
     for(int i = 0; i < boardY - 2; i++){

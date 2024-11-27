@@ -1,4 +1,5 @@
 #include "GameMechs.h"
+#include "MacUILib.h"
 
 
 
@@ -109,4 +110,13 @@ char GameMechs::getLastinput()
 void GameMechs::setlastinput(char in)
 {
     lastinput = in;
+}
+
+void GameMechs::collectAsyncInput()
+{
+    if(MacUILib_hasChar())
+    {
+        input = MacUILib_getChar();
+        lastinput = input;
+    }
 }

@@ -51,6 +51,7 @@ class GameMechs
         void setInputStatusTrue();
         char getLastinput();
         void setlastinput(char in);
+        void collectAsyncInput();
 };
 
 #endif

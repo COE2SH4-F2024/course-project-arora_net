@@ -6,6 +6,7 @@ using namespace std;
 
 Food::Food()
 {
+    //start out of bounds 
     foodpos = objPos(400,400,'@');
 }
 Food::~Food()
@@ -13,7 +14,7 @@ Food::~Food()
 
 }
 
-void Food::generateFood(objPos blockOff)
+void Food::generateFood(objPosArrayList *blockOff)
 {
     int x_max = 29;
     int y_max = 12; 
@@ -27,17 +28,28 @@ void Food::generateFood(objPos blockOff)
         //make new object to test if pos is equal
         const objPos random_pos(rand_x,rand_y,'*');
 
+        bool overlap = false;
+        for(int i = 0; i < blockOff->getSize(); i++)
+        {
+            objPos current_seg = blockOff->getElement(i);
 
-        if(!blockOff.isPosEqual(&random_pos)){
+            if(current_seg.isPosEqual(&random_pos))
+            {
+                overlap = true;
+            } 
+        }
+        if(!overlap)
+        {
             foodpos.setPosx(rand_x);
             foodpos.setPosy(rand_y);
             generated = true;
+
         }
     }
 }
 objPos Food::getFoodPos() const
 {
-    return(foodpos.getObjPos());
+    return foodpos;
 }
 
 int Food::getfoodx()

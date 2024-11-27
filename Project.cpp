@@ -6,12 +6,15 @@
 #include "GameMechs.h"
 #include "Player.h"
 #include "Food.h"
+#include "objPosArrayList.h"
 
 using namespace std;
 
 GameMechs *mechanics;
 Player *player_ptr;
 Food *food;
+
+
 
 #define DELAY_CONST 100000
 
@@ -50,23 +53,25 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     mechanics = new GameMechs;
-    player_ptr = new Player(mechanics);
     food = new Food;
+    player_ptr = new Player(mechanics,food);
 
+    //seed the random generation
     srand(time(0));
+    //generate random location for food
+
     food->generateFood(player_ptr->getPlayerPos());
 }
 
 void GetInput(void)
 {
-    if(MacUILib_hasChar())
-    {
-        mechanics->setInput(MacUILib_getChar());
-        mechanics->setlastinput(mechanics->getInput());
+    
+    mechanics->collectAsyncInput();
 
-        if(mechanics->getInput() == ']')
-            food->generateFood(player_ptr->getPlayerPos());
-    }
+    //debug key
+    //if(mechanics->getInput() == ']');
+        //food->generateFood(player_ptr->getPlayerPos());
+    
 }
 
 void RunLogic(void)
@@ -85,19 +90,60 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
+
+    int boardY = mechanics->getBoardSizeY();
+    int boardX = mechanics->getBoardSizeX();
+    
+    objPosArrayList *temp = player_ptr->getPlayerPos();
+    objPos temp_player = temp->getElement(0);
+    int playerx = temp_player.pos->x;
+    int playery = temp_player.pos->y;
+
+    int foodx = food->getfoodx();
+    int foody = food->getfoody();
+    char foodsymbol = food->getsymbol();
+    
+
+    MacUILib_printf("food x:%d\n",foodx);
+    MacUILib_printf("food y:%d\n",foody);
+
+    MacUILib_printf("player x:%d\n",playerx);
+    MacUILib_printf("player y:%d\n",playery);
+    MacUILib_printf("player symbol:%c\n",temp_player.getSymbol());
+
     MacUILib_printf("%s\n","##############################");
-    for(int i = 0; i < mechanics->getBoardSizeY() - 2; i++){
-        for(int j = 0; j < mechanics->getBoardSizeX(); j++){
-            if(j == 0){
+    for(int i = 0; i < boardY - 2; i++){
+        for(int j = 0; j < boardX; j++){
+            if(j == 0)
+            {
                 MacUILib_printf("%c",'#');
-            }else if(j == 29){
+            }
+            else if(j == 29)
+            {
                 MacUILib_printf("%c\n",'#');
-            }else if(i == player_ptr->getPlayerY() && j == player_ptr->getPlayerX()){
-                MacUILib_printf("%c",player_ptr->getplayerchar());
-            }else if(i == food->getfoody() && j == food->getfoodx()){
-                MacUILib_printf("%c",food->getsymbol());
-            }else{
-                MacUILib_printf("%c",' ');
+            }
+            else if(foody == i && foodx == j)
+            {
+                MacUILib_printf("%c",foodsymbol);
+            }
+            else
+            {
+                int count = 0;
+                objPosArrayList *temp_list = player_ptr->getPlayerPos();
+                for(int k = 0; k < player_ptr->getsizeoflist(); k++)
+                {
+                    objPos current_seg = temp_list->getElement(k);
+                    if(current_seg.pos->x == j && current_seg.pos->y == i)
+                    {
+                       MacUILib_printf("%c",current_seg.getSymbol());
+                       count++; 
+                       break;
+                    }
+                }
+                if(!count){
+                    MacUILib_printf("%c",' ');
+                }
+                
             }
         }
     }
@@ -121,5 +167,5 @@ void CleanUp(void)
 
     delete mechanics;
     delete player_ptr;
-    delete food;
+    //delete food;
 }

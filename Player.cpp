@@ -1,25 +1,32 @@
 #include "Player.h"
+#include "Food.h"
 
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef, Food *food)
 {
     mainGameMechsRef = thisGMRef;
     myDir = START;
-
+    foodRef = food;
+    
     // Initialize player position at the center of the board
-    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,mainGameMechsRef->getBoardSizeY() / 2,'*');
+    playerPosList = new objPosArrayList;
+    objPos headpos(mainGameMechsRef->getBoardSizeX() / 2,
+                   mainGameMechsRef->getBoardSizeY() / 2,
+                   '*');
+    playerPosList->insertHead(headpos);
 }
 
 
 Player::~Player()
 {
     // delete any heap members here
+    delete playerPosList;
 }
 
-objPos Player::getPlayerPos() const
+objPosArrayList* Player::getPlayerPos() const 
 {
     // return the reference to the playerPos arrray list
-    return playerPos;
+    return playerPosList;
 
 }
 
@@ -73,23 +80,28 @@ void Player::movePlayer()
     int boardSizeX = mainGameMechsRef->getBoardSizeX();
     int boardSizeY = mainGameMechsRef->getBoardSizeY();
 
+    // create a temp objpos to calculate the position of the head
+    // get the head element of hte playerposlist as a good starting point
+    objPos temp = playerPosList->getHeadElement();
+    
     // Update position based on direction
     switch(myDir)
     {
+        //calc the new position of the head using the temp 
         case UP:
-            playerPos.DecrementY();
+            temp.pos->y--;
             break;
             
         case DOWN:
-            playerPos.incrementY();
+            temp.pos->y++;
             break;
             
         case LEFT:
-            playerPos.DecrementX();
+            temp.pos->x--;
             break;
             
         case RIGHT:
-            playerPos.incrementX();
+            temp.pos->x++;
             break;
             
         case STOP:
@@ -97,37 +109,73 @@ void Player::movePlayer()
             break;  // No movement if direction is STOP
     }
     //wraparound logic
-    if(playerPos.getPosx() >= 1)
+    if(temp.pos->x >= 1)
     {
-        playerPos.setPosx(playerPos.getPosx() % (boardSizeX-1));
-        if(playerPos.getPosx() == 0)
-            playerPos.setPosx(1);
+        temp.setPosx(temp.pos->x % (boardSizeX-1));
+        if(temp.pos->x == 0)
+            temp.setPosx(1);
     }
     else
-        playerPos.setPosx(boardSizeX - 2);
+        temp.setPosx(boardSizeX - 2);
     
 
-    if(playerPos.getPosy() >= 0)
-        playerPos.setPosy(playerPos.getPosy() % (boardSizeY - 2));
+    if(temp.pos->y >= 0)
+        temp.setPosy(temp.pos->y % (boardSizeY - 2));
     else
-        playerPos.setPosy((boardSizeY - 3));
+        temp.setPosy((boardSizeY - 3));
+    
+    //insert temp objpos to the head of the list
+    playerPosList->insertHead(temp);
+    playerPosList->removeTail();
+
+    //iteration 2
+    //  check if new objpos overlaps with foodpos (gamemechecs class) (isposequal)
+    //  if overlaped food consumed do not remove snake tail and take the required actions 
+    //  to increase the score
+    
+    if(checkFoodConsumption(temp))
+    {
+        increasePlayerLength(temp);
+        foodRef->generateFood(playerPosList);
+    }else{
+        playerPosList->insertHead(temp);
+        playerPosList->removeTail();
+    }
     
     
+
+    //Iteration 3
+    // If no overlap remove tail complete movemnet
+
+
 }
 
 // More methods to be added
-int Player::getPlayerX()
+bool Player::checkFoodConsumption(objPos temp)
 {
-    return playerPos.getPosx();
+
+    objPos temp_buffer = foodRef->getFoodPos();
+    if(temp.isPosEqual(&temp_buffer))
+    {
+        return true;
+        playerPosList->insertHead(temp);
+        foodRef->generateFood(playerPosList);
+    }else{
+        return false;
+    }
+    
 }
-int Player::getPlayerY()
+void Player::increasePlayerLength(objPos temp)
 {
-    return playerPos.getPosy();
+    playerPosList->insertHead(temp);
+    foodRef->generateFood(playerPosList);
 }
-char Player::getplayerchar()
+
+int Player::getsizeoflist()
 {
-    return playerPos.getSymbol();
+    return playerPosList->getSize();
 }
+
 const char* Player::getPlayerDir()
 {
     switch (myDir)

@@ -128,6 +128,12 @@ void Player::movePlayer()
     playerPosList->insertHead(temp);
     playerPosList->removeTail();
 
+     // self-collision check
+    if (checkSelfCollision())
+    {
+        return;  // exit if collision detected
+    }
+
     //iteration 2
     //  check if new objpos overlaps with foodpos (gamemechecs class) (isposequal)
     //  if overlaped food consumed do not remove snake tail and take the required actions 
@@ -197,4 +203,22 @@ const char* Player::getPlayerDir()
         default:
             return "unknown";
     }
+}
+
+bool Player::checkSelfCollision()
+{
+    objPos head = playerPosList->getElement(0);  // Get head position
+    
+    // Start from 1 to skip comparing head with itself
+    for(int i = 1; i < playerPosList->getSize(); i++)
+    {
+        objPos segment = playerPosList->getElement(i);
+        if(head.pos->x == segment.pos->x && head.pos->y == segment.pos->y)
+        {
+            mainGameMechsRef->setLoseFlag();
+            mainGameMechsRef->setExitTrue();
+            return true;
+        }
+    }
+    return false;
 }

@@ -129,6 +129,13 @@ void Player::movePlayer()
     playerPosList->insertHead(temp);
     playerPosList->removeTail();
 
+    if (checkSelfCollision())
+    {
+        mainGameMechsRef->setExitTrue();
+        mainGameMechsRef->getLoseFlagStatus();
+        //return;  // exit if collision detected
+    }
+
     //check food consumption 
     if(checkFoodConsumption(temp))
     {
@@ -198,4 +205,22 @@ const char* Player::getPlayerDir()
         default:
             return "unknown";
     }
+}
+
+bool Player::checkSelfCollision()
+{
+    objPos head = playerPosList->getElement(0);  // Get head position
+    
+    // Start from 1 to skip comparing head with itself
+    for(int i = 1; i < playerPosList->getSize(); i++)
+    {
+        objPos segment = playerPosList->getElement(i);
+        if(head.pos->x == segment.pos->x && head.pos->y == segment.pos->y)
+        {
+            mainGameMechsRef->setLoseFlag();
+            mainGameMechsRef->setExitTrue();
+            return true;
+        }
+    }
+    return false;
 }

@@ -31,6 +31,7 @@ class Player
         int getsizeoflist();
         bool checkFoodConsumption(objPos temp);
         void increasePlayerLength(objPos temp);
+        bool checkSelfCollision(); 
        
         const char* getPlayerDir(); // returns current player direction as a string 
     private:

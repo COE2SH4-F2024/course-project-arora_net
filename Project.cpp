@@ -176,7 +176,16 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+    //MacUILib_clearScreen(); 
+
+    if(mechanics->getLoseFlagStatus() == true)
+    {
+        MacUILib_printf("THANK YOU FOR PLAYING\n");
+        MacUILib_printf("YOUR SCORE WAS: %d\n",mechanics->getScore());
+
+    }else{
+        MacUILib_printf("YOU QUIT, PLAY AGAIN SOON\n");
+    } 
 
     MacUILib_uninit();
 

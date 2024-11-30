@@ -96,10 +96,13 @@ void GameMechs::clearInput()
 // More methods should be added here
 void GameMechs::incrementScore(objPosArrayList *refList, objPos refFood)
 {
+    //if special char ($) increment score by 10
     if(refFood.getSymbol() == '$')
-        score = score + 10;
-    else if(refFood.getSymbol() == '@')
-        score = score + 1;
+        score += 10;
+    else if(refFood.getSymbol() == '@') // normal food icnrease by 1
+        score += 1;
+    else if(refFood.getSymbol() == '!')
+        score += 50;
 }
 
 
@@ -125,8 +128,10 @@ void GameMechs::setlastinput(char in)
 
 void GameMechs::collectAsyncInput()
 {
+    //check if user inputted a character 
     if(MacUILib_hasChar())
     {
+        //set input 
         input = MacUILib_getChar();
         lastinput = input;
     }

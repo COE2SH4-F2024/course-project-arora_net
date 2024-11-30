@@ -13,6 +13,7 @@ Player::Player(GameMechs* thisGMRef, Food *food)
     objPos headpos(mainGameMechsRef->getBoardSizeX() / 2,
                    mainGameMechsRef->getBoardSizeY() / 2,
                    '*');
+    //Insert head
     playerPosList->insertHead(headpos);
 }
 
@@ -128,35 +129,26 @@ void Player::movePlayer()
     playerPosList->insertHead(temp);
     playerPosList->removeTail();
 
-    //iteration 2
-    //  check if new objpos overlaps with foodpos (gamemechecs class) (isposequal)
-    //  if overlaped food consumed do not remove snake tail and take the required actions 
-    //  to increase the score
-    
+    //check food consumption 
     if(checkFoodConsumption(temp))
     {
         increasePlayerLength(temp);
         foodRef->generateFood(playerPosList);
         mainGameMechsRef->incrementScore(playerPosList,consumedFood);
     }
-    //mainGameMechsRef->incrementScore(playerPosList,consumedFood);
     
-    
-
-    //Iteration 3
-    // If no overlap remove tail complete movemnet
-
-
 }
 
 // More methods to be added
 bool Player::checkFoodConsumption(objPos temp)
 {
-
+    
     for(int i = 0; i < 5; i++)
     {
+        //loop through the food list 
         objPosArrayList *temparrlist = foodRef->getFoodPos();
         objPos temp_buffer = temparrlist->getElement(i);
+        // check if player overlaps the food
         if(temp.isPosEqual(&temp_buffer))
         {
             consumedFood = temp_buffer;
@@ -169,8 +161,17 @@ bool Player::checkFoodConsumption(objPos temp)
 
 void Player::increasePlayerLength(objPos temp)
 {
-    playerPosList->insertHead(temp);
-    foodRef->generateFood(playerPosList);
+    if(consumedFood.symbol == '!') // special food
+    {
+        for(int i = 0; i < 10; i++) // increase length  by 10
+        {
+            playerPosList->insertHead(temp);
+        }
+        foodRef->generateFood(playerPosList);
+    }else{
+        playerPosList->insertHead(temp);
+        foodRef->generateFood(playerPosList);
+    }
 }
 
 int Player::getsizeoflist()

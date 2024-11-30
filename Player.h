@@ -31,12 +31,12 @@ class Player
         int getsizeoflist();
         bool checkFoodConsumption(objPos temp);
         void increasePlayerLength(objPos temp);
-
        
         const char* getPlayerDir();
     private:
         objPosArrayList *playerPosList; // Upgrade this in iteration 3.       
         enum Dir myDir;
+        objPos consumedFood; // tracks what kind of food was consumed (for bonus)
 
         // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;

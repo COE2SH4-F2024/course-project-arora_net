@@ -111,18 +111,18 @@ void Player::movePlayer()
     //wraparound logic
     if(temp.pos->x >= 1)
     {
-        temp.setPosx(temp.pos->x % (boardSizeX-1));
+        temp.pos->x %= (boardSizeX-1);
         if(temp.pos->x == 0)
-            temp.setPosx(1);
+            temp.pos->x = 1;
     }
     else
-        temp.setPosx(boardSizeX - 2);
+        temp.pos->x = (boardSizeX - 2);
     
-
     if(temp.pos->y >= 0)
-        temp.setPosy(temp.pos->y % (boardSizeY - 2));
+        temp.pos->y %= (boardSizeY - 2);
     else
-        temp.setPosy((boardSizeY - 3));
+        temp.pos->y = (boardSizeY - 3);
+        
     
     //insert temp objpos to the head of the list
     playerPosList->insertHead(temp);
@@ -137,8 +137,9 @@ void Player::movePlayer()
     {
         increasePlayerLength(temp);
         foodRef->generateFood(playerPosList);
+        mainGameMechsRef->incrementScore(playerPosList,consumedFood);
     }
-    mainGameMechsRef->incrementScore(playerPosList);
+    //mainGameMechsRef->incrementScore(playerPosList,consumedFood);
     
     
 
@@ -152,15 +153,20 @@ void Player::movePlayer()
 bool Player::checkFoodConsumption(objPos temp)
 {
 
-    objPos temp_buffer = foodRef->getFoodPos();
-    if(temp.isPosEqual(&temp_buffer))
+    for(int i = 0; i < 5; i++)
     {
-        return true;
-    }else{
-        return false;
+        objPosArrayList *temparrlist = foodRef->getFoodPos();
+        objPos temp_buffer = temparrlist->getElement(i);
+        if(temp.isPosEqual(&temp_buffer))
+        {
+            consumedFood = temp_buffer;
+            return true;
+        }
+        
     }
-    
+    return false;
 }
+
 void Player::increasePlayerLength(objPos temp)
 {
     playerPosList->insertHead(temp);

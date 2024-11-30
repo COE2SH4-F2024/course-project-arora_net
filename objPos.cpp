@@ -28,6 +28,7 @@ objPos& objPos::operator= (const objPos &obj)
 {
     if(this != &obj)
     {
+        delete pos;
         pos = new Pos{obj.pos->x,obj.pos->y};
         symbol = obj.symbol;
     }
@@ -84,48 +85,3 @@ char objPos::getSymbolIfPosEqual(const objPos* refPos) const
         return 0;
 }
 
-int objPos::getPosx()
-{
-    return pos->x;
-}
-
-int objPos::getPosy()
-{
-    return pos->y;
-}
-
-void objPos::setPosx(int _x)
-{
-    pos->x = _x;
-}
-void objPos::setPosy(int _y)
-{
-    pos->y = _y;
-}
-
-void objPos::incrementX()
-{
-    pos->x = getPosx() + 1;
-}
-void objPos::incrementY()
-{
-    pos->y = getPosy() + 1;
-}
-void objPos::DecrementX()
-{
-    pos->x = getPosx() - 1;
-}
-void objPos::DecrementY()
-{
-    pos->y = getPosy() - 1;
-}
-
-void objPos::setX(int _x)
-{
-    pos->x = _x;
-}
-
-void objPos::setY(int _y)
-{
-    pos->y = _y;
-}

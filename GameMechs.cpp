@@ -94,10 +94,14 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
-void GameMechs::incrementScore(objPosArrayList *refList)
+void GameMechs::incrementScore(objPosArrayList *refList, objPos refFood)
 {
-    score = refList->getSize() - 1;
+    if(refFood.getSymbol() == '$')
+        score = score + 10;
+    else if(refFood.getSymbol() == '@')
+        score = score + 1;
 }
+
 
 int GameMechs::getInputStatus() const
 {

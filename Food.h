@@ -8,18 +8,17 @@
 class Food
 {
     private:
-        objPos foodpos;
+       // objPos foodpos;
+        objPosArrayList *foodbucket;
     public:
         Food();
         ~Food();
 
         void generateFood(objPosArrayList *blockOff);
-        objPos getFoodPos() const;
+        objPosArrayList *getFoodPos() const;
 
         //added member functions 
-        int getfoodx();
-        int getfoody();
-        char getsymbol();
+        
 };
 
 #endif

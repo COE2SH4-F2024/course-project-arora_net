@@ -67,10 +67,6 @@ void GetInput(void)
 {
     
     mechanics->collectAsyncInput();
-
-    //debug key
-    //if(mechanics->getInput() == ']');
-        //food->generateFood(player_ptr->getPlayerPos());
     
 }
 
@@ -99,22 +95,16 @@ void DrawScreen(void)
     int playerx = temp_player.pos->x;
     int playery = temp_player.pos->y;
 
-    int foodx = food->getfoodx();
-    int foody = food->getfoody();
-    char foodsymbol = food->getsymbol();
-
     int score = mechanics->getScore();
     
-    //debugging print statements 
-    /*
-    MacUILib_printf("food x:%d\n",foodx);
-    MacUILib_printf("food y:%d\n",foody);
-
-    MacUILib_printf("player x:%d\n",playerx);
-    MacUILib_printf("player y:%d\n",playery);
-    MacUILib_printf("player symbol:%c\n",temp_player.getSymbol());
-    */
-
+    MacUILib_printf("CONTROLS\n");
+    MacUILib_printf("UP: W\n");
+    MacUILib_printf("DOWN: S\n");
+    MacUILib_printf("LEFT: A\n");
+    MacUILib_printf("RIGHT: D\n");
+    MacUILib_printf("_____________________________________\n");
+    MacUILib_printf("@ = 1 point\n");
+    MacUILib_printf("$ = 10 points\n");
     MacUILib_printf("%s\n","##############################");
     for(int i = 0; i < boardY - 2; i++){
         for(int j = 0; j < boardX; j++){
@@ -126,10 +116,7 @@ void DrawScreen(void)
             {
                 MacUILib_printf("%c\n",'#');
             }
-            else if(foody == i && foodx == j)
-            {
-                MacUILib_printf("%c",foodsymbol);
-            }
+            
             else
             {
                 int count = 0;
@@ -142,6 +129,18 @@ void DrawScreen(void)
                        MacUILib_printf("%c",current_seg.getSymbol());
                        count++; 
                        break;
+                    }
+                }
+                
+                objPosArrayList *temp_food = food->getFoodPos();
+                for(int z = 0; z < 5; z++)
+                {
+                    objPos tempFood = temp_food->getElement(z);
+                    if(tempFood.pos->x == j && tempFood.pos->y == i)
+                    {
+                       MacUILib_printf("%c",tempFood.getSymbol());
+                       count++; 
+                       break; 
                     }
                 }
                 if(!count){
@@ -172,5 +171,5 @@ void CleanUp(void)
 
     delete mechanics;
     delete player_ptr;
-    //delete food;
+    delete food;
 }

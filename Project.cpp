@@ -10,9 +10,10 @@
 
 using namespace std;
 
-GameMechs *mechanics;
-Player *player_ptr;
-Food *food;
+// pointers to main game objects
+GameMechs *mechanics; // points to a new GameMechs object in heap memory
+Player *player_ptr;  
+Food *food; 
 
 
 
@@ -33,7 +34,9 @@ int main(void)
 {
 
     Initialize();
+
     MacUILib_printf("%d",mechanics->getExitFlagStatus());
+
     while(mechanics->getExitFlagStatus() == false)  
     {
         GetInput();
@@ -58,42 +61,36 @@ void Initialize(void)
 
     //seed the random generation
     srand(time(0));
-    //generate random location for food
 
+    //generate random location for food
     food->generateFood(player_ptr->getPlayerPos());
 }
 
 void GetInput(void)
 {
-    
     mechanics->collectAsyncInput();
-    
 }
 
 void RunLogic(void)
 {
     if(mechanics->getInput() != 0){
-        player_ptr->updatePlayerDir();
-        player_ptr->movePlayer();
-    }else if(mechanics->getLastinput() != 0)
-    {
-        player_ptr->updatePlayerDir();
+        player_ptr->updatePlayerDir(); // update the direction based on new input
+        player_ptr->movePlayer(); 
+    }
+    else if(mechanics->getLastinput() != 0){ // no new input
+        player_ptr->updatePlayerDir(); // keep the same direction
         player_ptr->movePlayer();
     }
-    mechanics->clearInput();
+    mechanics->clearInput(); // clear the input buffer
 }
 
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
 
+    // get boardsize
     int boardY = mechanics->getBoardSizeY();
     int boardX = mechanics->getBoardSizeX();
-    
-    objPosArrayList *temp = player_ptr->getPlayerPos();
-    objPos temp_player = temp->getElement(0);
-    int playerx = temp_player.pos->x;
-    int playery = temp_player.pos->y;
 
     int score = mechanics->getScore();
     
@@ -119,8 +116,10 @@ void DrawScreen(void)
             
             else
             {
-                int count = 0;
-                objPosArrayList *temp_list = player_ptr->getPlayerPos();
+                int count = 0; // track if something was already drew at this position
+
+                // check if any part of the snake is at current position
+                objPosArrayList *temp_list = player_ptr->getPlayerPos(); //temporarily hold the snake's position data while drawing
                 for(int k = 0; k < player_ptr->getsizeoflist(); k++)
                 {
                     objPos current_seg = temp_list->getElement(k);
@@ -132,7 +131,8 @@ void DrawScreen(void)
                     }
                 }
                 
-                objPosArrayList *temp_food = food->getFoodPos();
+                // check if any food is at current position
+                objPosArrayList *temp_food = food->getFoodPos(); // temporarily hold the food positions while drawing
                 for(int z = 0; z < 5; z++)
                 {
                     objPos tempFood = temp_food->getElement(z);
@@ -143,6 +143,7 @@ void DrawScreen(void)
                        break; 
                     }
                 }
+                // if nothing, draw empty space
                 if(!count){
                     MacUILib_printf("%c",' ');
                 }
@@ -169,6 +170,7 @@ void CleanUp(void)
 
     MacUILib_uninit();
 
+    // free memory allocations
     delete mechanics;
     delete player_ptr;
     delete food;

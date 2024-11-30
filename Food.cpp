@@ -11,6 +11,8 @@ Food::Food()
     foodbucket = new objPosArrayList;
 
 }
+
+// Destructor - clean up dynamic memory
 Food::~Food()
 {
     delete foodbucket;

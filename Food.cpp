@@ -20,7 +20,7 @@ void Food::generateFood(objPosArrayList *blockOff)
 {
     int x_max = 29;
     int y_max = 12; 
-    bool generated = false;
+    
 
     int NormalFood = 0; // holds how many succesful 'normal' food objects were generated
     int SpecialFood1 = 0; // holds how many succesful 'special' food objects were generated (increase score by 10)
@@ -66,7 +66,7 @@ void Food::generateFood(objPosArrayList *blockOff)
 
         }
     }
-    generated = false;
+    
     //genreates 2 special foods (same logic as above just with different symbol)
     while(SpecialFood1 < 1)
     {
@@ -99,7 +99,6 @@ void Food::generateFood(objPosArrayList *blockOff)
             objPos tempfood(rand_x,rand_y,'$');
             foodbucket->insertHead(tempfood);
             SpecialFood1++;
-            generated = true;
 
         }
     }
@@ -134,7 +133,6 @@ void Food::generateFood(objPosArrayList *blockOff)
             objPos tempfood(rand_x,rand_y,'!');
             foodbucket->insertHead(tempfood);
             SpecialFood2++;
-            generated = true;
 
         }
     }

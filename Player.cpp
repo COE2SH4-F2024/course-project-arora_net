@@ -131,9 +131,8 @@ void Player::movePlayer()
 
     if (checkSelfCollision())
     {
+        mainGameMechsRef->setLoseFlag();
         mainGameMechsRef->setExitTrue();
-        mainGameMechsRef->getLoseFlagStatus();
-        //return;  // exit if collision detected
     }
 
     //check food consumption 
@@ -172,7 +171,7 @@ void Player::increasePlayerLength(objPos temp)
     {
         for(int i = 0; i < 10; i++) // increase length  by 10
         {
-            playerPosList->insertHead(temp);
+            playerPosList->insertTail(temp);
         }
         foodRef->generateFood(playerPosList);
     }else{
@@ -217,8 +216,6 @@ bool Player::checkSelfCollision()
         objPos segment = playerPosList->getElement(i);
         if(head.pos->x == segment.pos->x && head.pos->y == segment.pos->y)
         {
-            mainGameMechsRef->setLoseFlag();
-            mainGameMechsRef->setExitTrue();
             return true;
         }
     }

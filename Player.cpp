@@ -65,9 +65,20 @@ void Player::updatePlayerDir()
         case ';':
             myDir = STOP;
             break;
-            
+        
+        case '1':
+            mainGameMechsRef->setGameSpeed(1);  // Slowest
+            break;
+        case '2':
+            mainGameMechsRef->setGameSpeed(2);  // Normal
+            break;
+        case '3':
+            mainGameMechsRef->setGameSpeed(3);  // Fastest
+            break;  
+
         default: 
             break;
+
     }
     
     mainGameMechsRef->clearInput();  // Clear input buffer 

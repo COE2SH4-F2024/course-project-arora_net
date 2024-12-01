@@ -14,6 +14,7 @@ GameMechs::GameMechs()
     boardSizeX = 30;
     boardSizeY = 15;
     score = 0;
+    gameSpeed = 2;
     
 }
 
@@ -33,7 +34,9 @@ GameMechs::GameMechs(int boardX, int boardY)
 // do you need a destructor?
 GameMechs::~GameMechs()
 {
-    
+    // no
+    // didn't allocate any dynamic memory (no new operations)
+    // doesn't own any resources that need to be cleaned up
 }
 
 bool GameMechs::getExitFlagStatus() const
@@ -94,7 +97,9 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
-void GameMechs::incrementScore(objPosArrayList *refList, objPos refFood)
+
+// increases the score based on the type of food eaten
+void GameMechs::incrementScore(objPosArrayList *refList, objPos refFood) 
 {
     //if special char ($) increment score by 10
     if(refFood.getSymbol() == '$')

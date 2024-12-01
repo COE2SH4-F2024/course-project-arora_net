@@ -11,6 +11,8 @@ Food::Food()
     foodbucket = new objPosArrayList;
 
 }
+
+// Destructor - clean up dynamic memory
 Food::~Food()
 {
     delete foodbucket;
@@ -37,7 +39,7 @@ void Food::generateFood(objPosArrayList *blockOff)
         const objPos random_pos(rand_x,rand_y,'*');
 
         bool overlap = false;
-        //check if new food overlaps with any if the player objects 
+        //check if new food overlaps with any player objects 
         for(int i = 0; i < blockOff->getSize(); i++)
         {
             objPos current_seg = blockOff->getElement(i);

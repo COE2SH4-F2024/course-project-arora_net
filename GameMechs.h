@@ -22,6 +22,8 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
+        int gameSpeed;
+
         objPos food;
 
         char lastinput;
@@ -43,6 +45,9 @@ class GameMechs
 
         int getBoardSizeX() const;
         int getBoardSizeY() const;
+
+        void setGameSpeed(int speed) { gameSpeed = speed; }
+        int getGameSpeed() const { return gameSpeed; }
         
         int getScore() const;
         void incrementScore();

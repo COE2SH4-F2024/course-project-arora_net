@@ -2,25 +2,28 @@
 
 objPos::objPos()
 {
-    pos = new Pos;
+    pos = new Pos; // Allocate memory for position
     pos->x = 0;
     pos->y = 0;
-    symbol = 0; //NULL
+    symbol = 0; // Set symbol to NULL character
 }
 
+//initializes with specific position and symbol
 objPos::objPos(int xPos, int yPos, char sym)
 {
     pos = new Pos;
     pos->x = xPos;
     pos->y = yPos;
-    symbol = sym;
+    symbol = sym; // Set symbol to provided character
 }
 
 // Respect the rule of six / minimum four
 // [TODO] Implement the missing special member functions to meet the minimum four rule
+
+// Copy constructor
 objPos::objPos(const objPos &obj)
 {
-    pos = new Pos;
+    pos = new Pos; // allocate new memory not shared with the original
     pos->x = obj. pos->x;
     pos->y = obj. pos->y;
     symbol = obj. symbol;
@@ -40,10 +43,8 @@ objPos& objPos::operator= (const objPos &obj)
 
 objPos::~objPos()
 {
-    delete pos;
+    delete pos;  // Free Pos
 }
-
-
 
 void objPos::setObjPos(objPos o)
 {
@@ -74,11 +75,14 @@ char objPos::getSymbol() const
     return symbol;
 }
 
+// checks if this object's position matches another object's position
+// used for collision detection
 bool objPos::isPosEqual(const objPos* refPos) const
 {
     return (refPos->pos->x == pos->x && refPos->pos->y == pos->y);
 }
 
+// If positions match returns object's symbol
 char objPos::getSymbolIfPosEqual(const objPos* refPos) const
 {
     if(isPosEqual(refPos))

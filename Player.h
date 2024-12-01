@@ -33,8 +33,7 @@ class Player
         void increasePlayerLength(objPos temp);
         bool checkSelfCollision(); 
        
-        const char* getPlayerDir();
-
+        const char* getPlayerDir(); // returns current player direction as a string 
     private:
         objPosArrayList *playerPosList; // Upgrade this in iteration 3.       
         enum Dir myDir;

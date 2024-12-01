@@ -118,6 +118,7 @@ void Player::movePlayer()
             
         case STOP:
             mainGameMechsRef->setExitTrue();
+            mainGameMechsRef->setLooseFalse();
             break;  // No movement if direction is STOP
     }
     //wraparound logic
@@ -140,7 +141,7 @@ void Player::movePlayer()
     playerPosList->insertHead(temp);
     playerPosList->removeTail();
 
-    if (checkSelfCollision())
+    if (checkSelfCollision() && !mainGameMechsRef->getExitFlagStatus())
     {
         mainGameMechsRef->setLoseFlag();
         mainGameMechsRef->setExitTrue();

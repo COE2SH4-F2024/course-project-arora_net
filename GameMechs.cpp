@@ -7,7 +7,7 @@
 GameMechs::GameMechs()
 {   
     exitFlag = 0;
-    loseFlag = 0;
+    loseFlag = false;
     score = 0;
     inputStatus = false;
     exitFlag = false;
@@ -21,7 +21,7 @@ GameMechs::GameMechs()
 GameMechs::GameMechs(int boardX, int boardY)
 {
     exitFlag = 0;
-    loseFlag = 0;
+    loseFlag = false;
     score = 0;
     inputStatus = false;
     exitFlag = false;
@@ -140,4 +140,9 @@ void GameMechs::collectAsyncInput()
         input = MacUILib_getChar();
         lastinput = input;
     }
+}
+
+void GameMechs::setLooseFalse()
+{
+    loseFlag = false;
 }

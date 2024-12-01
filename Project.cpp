@@ -35,7 +35,6 @@ int main(void)
 
     Initialize();
 
-    MacUILib_printf("%d",mechanics->getExitFlagStatus());
 
     while(mechanics->getExitFlagStatus() == false)  
     {
@@ -114,6 +113,7 @@ void DrawScreen(void)
     MacUILib_printf("_____________________________________\n");
     MacUILib_printf("\n@ = 1 point\n");
     MacUILib_printf("$ = 10 points\n");
+    MacUILib_printf("! = 50 points and increases snake length by 10!\n");
     MacUILib_printf("%s\n","\n##############################");
 
     for(int i = 0; i < boardY - 2; i++){
@@ -190,10 +190,11 @@ void CleanUp(void)
 
     if(mechanics->getLoseFlagStatus() == true)
     {
+        MacUILib_printf("\nGAMEOVER\n");
         MacUILib_printf("\nTHANK YOU FOR PLAYING\n");
         MacUILib_printf("YOUR SCORE WAS: %d\n",mechanics->getScore());
 
-    }else{
+    }else if(mechanics->getLoseFlagStatus() == false){
         MacUILib_printf("\nYOU QUIT, PLAY AGAIN SOON\n");
     } 
 

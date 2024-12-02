@@ -171,6 +171,7 @@ void DrawScreen(void)
     const char *direction = player_ptr->getPlayerDir();
     MacUILib_printf("\nDIRECTION: %s\n",direction);
     MacUILib_printf("CURRENT SPEED: %d\n", mechanics->getGameSpeed());
+    MacUILib_printf("CURRENT SIZE: %d\n", player_ptr->getsizeoflist());
     MacUILib_printf("SCORE: %d\n",score);
 
 }

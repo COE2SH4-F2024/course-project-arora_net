@@ -187,13 +187,13 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     //MacUILib_clearScreen(); 
-
+    //if death
     if(mechanics->getLoseFlagStatus() == true)
     {
         MacUILib_printf("\nGAMEOVER\n");
         MacUILib_printf("\nTHANK YOU FOR PLAYING\n");
         MacUILib_printf("YOUR SCORE WAS: %d\n",mechanics->getScore());
-
+    //if player quits
     }else if(mechanics->getLoseFlagStatus() == false){
         MacUILib_printf("\nYOU QUIT, PLAY AGAIN SOON\n");
     } 

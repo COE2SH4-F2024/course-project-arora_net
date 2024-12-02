@@ -111,16 +111,6 @@ void GameMechs::incrementScore(objPosArrayList *refList, objPos refFood)
 }
 
 
-int GameMechs::getInputStatus() const
-{
-    return inputStatus;
-}
-
-void GameMechs::setInputStatusTrue()
-{
-    inputStatus = true;
-}
-
 char GameMechs::getLastinput() 
 {
     return lastinput;

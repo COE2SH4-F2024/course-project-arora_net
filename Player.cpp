@@ -185,7 +185,7 @@ void Player::increasePlayerLength(objPos temp)
         {
             playerPosList->insertTail(temp);
         }
-        foodRef->generateFood(playerPosList);
+        foodRef->generateFood(playerPosList); // generate new foof after icnreasing legnth
     }else{
         playerPosList->insertHead(temp);
         foodRef->generateFood(playerPosList);
@@ -197,6 +197,7 @@ int Player::getsizeoflist()
     return playerPosList->getSize();
 }
 
+//returns a string containing current direction
 const char* Player::getPlayerDir()
 {
     switch (myDir)

@@ -54,9 +54,6 @@ class GameMechs
         
         // More methods should be added here
         void incrementScore(objPosArrayList *refList, objPos refFood);
-
-        int getInputStatus() const;
-        void setInputStatusTrue();
         char getLastinput();
         void setlastinput(char in);
         void collectAsyncInput();
